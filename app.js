@@ -61,7 +61,7 @@ router.route('/games')
       }
     });
   })
-    // READ route
+    // READ ALL route
   .get(function(req, res){
     
     //get all games
@@ -75,6 +75,47 @@ router.route('/games')
       }
     });
   });
+  
+router.route('/games/:game_id')
+
+  // READ route
+  .get(function(req, res){
+    Game.findById(req.params.game_id, function(err, game){
+      if(err){
+        console.log(err);
+        res.json({ message: 'Game reading ended in error.'});
+      }
+      else{
+        res.json({data: game});
+      }
+    });
+  })
+  
+  // UPDATE route
+  .put(function(req, res){
+    Game.findByIdAndUpdate(req.params.game_id, req.body, function(err){
+      if(err){
+        console.log(err);
+        res.json({ message: 'Game update ended in error.'});
+      }
+      else{
+        res.json({ message: 'Game update successful.'});
+      }
+    });
+  })
+  
+  // DELETE route
+  .delete(function(req, res){
+    Game.findByIdAndDelete(req.params.game_id, req.body, function(err){
+      if(err){
+        console.log(err);
+        res.json({ message: 'Game delete ended in error.'});
+      }
+      else{
+        res.json({ message: 'Game delete successful.'});
+      }
+    });
+  })
 
 // prefix and register routes
 app.use(API_URL_PREFIX, router);
