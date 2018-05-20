@@ -1,0 +1,1 @@
+create a REST API routes using express to Create,Read, Update and delete from a DB for a sample product definition of their choice. Bonus points for validating inputs and documenting with swagger
