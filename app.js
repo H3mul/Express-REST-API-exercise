@@ -26,12 +26,12 @@ db.once('open', function() {
 var app = express();
 var router = express.Router();
 
-// request data parsing into req.body
+// request data parsing
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // retrieve model
-var Game = require('./model.js');
+var model = require('./model.js');
 
 
 //      ROUTES
@@ -45,19 +45,13 @@ router.route('/games')
     // CREATE route
   .post(function(req, res) {
     
-    //create new game from request data
-    Game.create({
-      'name' : req.body.name,
-      'cross_platform' : req.body.cross_platform,
-      'rating' : req.body.rating,
-      'release_date' : req.body.release_date
-    }, function (err, small) {
+    model.create(req.body, function (err, data) {
       if (err) {
         console.log(err);
-        res.json({ message: 'Game creation ended in error.'});
+        res.json({ message: 'Creation ended in error.'});
       }
       else{
-        res.json({ message: 'Game created successfully.'});
+        res.json({ message: 'Creation successfull.', data: data});
       }
     });
   })
@@ -65,13 +59,13 @@ router.route('/games')
   .get(function(req, res){
     
     //get all games
-    Game.find(function(err, games){
+    model.readAll(function(err, data){
       if(err){
         console.log(err);
-        res.json({ message: 'Game reading ended in error.'});
+        res.json({ message: 'Reading ended in error.'});
       }
       else{
-        res.json({data: games});
+        res.json({data: data});
       }
     });
   });
@@ -80,39 +74,39 @@ router.route('/games/:game_id')
 
   // READ route
   .get(function(req, res){
-    Game.findById(req.params.game_id, function(err, game){
+    model.read(req.params.game_id, function(err, data){
       if(err){
         console.log(err);
-        res.json({ message: 'Game reading ended in error.'});
+        res.json({ message: 'Reading ended in error.'});
       }
       else{
-        res.json({data: game});
+        res.json({data: data});
       }
     });
   })
   
   // UPDATE route
   .put(function(req, res){
-    Game.findByIdAndUpdate(req.params.game_id, req.body, function(err){
+    model.update(req.params.game_id, req.body, function(err, data){
       if(err){
         console.log(err);
-        res.json({ message: 'Game update ended in error.'});
+        res.json({ message: 'Update ended in error.'});
       }
       else{
-        res.json({ message: 'Game update successful.'});
+        res.json({ message: 'Update successful.', data: data});
       }
     });
   })
   
   // DELETE route
   .delete(function(req, res){
-    Game.findByIdAndDelete(req.params.game_id, req.body, function(err){
+    model.delete(req.params.game_id, req.body, function(err){
       if(err){
         console.log(err);
-        res.json({ message: 'Game delete ended in error.'});
+        res.json({ message: 'Deletion ended in error.'});
       }
       else{
-        res.json({ message: 'Game delete successful.'});
+        res.json({ message: 'Deletion successful.'});
       }
     });
   })
