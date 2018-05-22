@@ -63,7 +63,7 @@ function update(id, data, callback){
     else{
       Game.findByIdAndUpdate(id, validatedData, {new: true}, function(err, data){
         if(data == null){
-          callback("No entry corresponding to game ID.")
+          callback("No entry corresponding to game ID, or empty update.")
         }
         else{
           callback(err, data);

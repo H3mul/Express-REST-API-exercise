@@ -16,8 +16,8 @@ Basic CRUD API for a single mongodb schema. Validates input data type and restri
 
 | Action  | URL | HTTP method  | HTTP Body|
 | ------------- |:-------------|:-----|:---|
-| Create | /api/games | POST | Schema json|
+| Create | /api/games | POST | Schema data |
 | Read All | /api/games | GET | |
 | Read | /api/games/:game_id | GET | |
-| Update | /api/games/:game_id | PUT | Schema json|
+| Update | /api/games/:game_id | PUT | Schema data |
 | Delete | /api/games/:game_id | DELETE | |
